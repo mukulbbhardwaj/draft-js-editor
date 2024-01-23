@@ -1,5 +1,5 @@
-import { useState,useEffect } from "react";
-import { EditorState,RichUtils,convertToRaw,convertFromRaw } from "draft-js";
+import { useState, useEffect } from "react";
+import { EditorState, RichUtils, convertToRaw, convertFromRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./App.css";
@@ -16,6 +16,11 @@ function App() {
     }
   }, []);
 
+  const styleMap = {
+    RED_LINE: {
+      color: "red",
+    },
+  };
   const handleBeforeInput = (chars, editorState) => {
     const currentContentState = editorState.getCurrentContent();
     const currentSelection = editorState.getSelection();
@@ -23,7 +28,6 @@ function App() {
       currentSelection.getStartKey()
     );
     const currentText = currentBlock.getText();
-
     // '#' => Heading
     if (chars === "#" && currentText.trim() === "") {
       const newEditorState = RichUtils.toggleBlockType(
@@ -48,15 +52,22 @@ function App() {
       setEditorState(newEditorState);
       return "handled";
     }
-    //make red color line
-
+    // '!'=> To give Red Color
+    if (chars === "!" && currentText.trim() === "") {
+      const newEditorState = RichUtils.toggleInlineStyle(
+        editorState,
+        "RED_LINE"
+      );
+      setEditorState(newEditorState);
+      return "handled";
+    }
     return "not-handled";
   };
-   const saveToLocalStorage = () => {
-     const contentState = editorState.getCurrentContent();
-     const contentRaw = convertToRaw(contentState);
-     localStorage.setItem("editorContent", JSON.stringify(contentRaw));
-   };
+  const saveToLocalStorage = () => {
+    const contentState = editorState.getCurrentContent();
+    const contentRaw = convertToRaw(contentState);
+    localStorage.setItem("editorContent", JSON.stringify(contentRaw));
+  };
   return (
     <div className="App">
       <div className="header">
@@ -71,6 +82,7 @@ function App() {
         editorClassName="editor-class"
         toolbarClassName="toolbar-class"
         handleBeforeInput={handleBeforeInput}
+        customStyleMap={styleMap}
       />
     </div>
   );
