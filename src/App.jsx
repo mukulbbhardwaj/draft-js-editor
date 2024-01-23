@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { EditorState, convertToRaw, RichUtils} from "draft-js";
+import { useState,useEffect } from "react";
+import { EditorState,RichUtils,convertToRaw,convertFromRaw } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import "./App.css";
@@ -8,6 +8,14 @@ function App() {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
+  useEffect(() => {
+    // Load content from local storage on component mount
+    const savedContent = localStorage.getItem("editorContent");
+    if (savedContent) {
+      const contentState = convertFromRaw(JSON.parse(savedContent));
+      setEditorState(EditorState.createWithContent(contentState));
+    }
+  }, []);
 
   const handleBeforeInput = (chars, editorState) => {
     const currentContentState = editorState.getCurrentContent();
@@ -26,7 +34,6 @@ function App() {
       setEditorState(newEditorState);
       return "handled";
     }
-
     // '*' => Bold
     if (chars === "*" && currentText.trim() === "") {
       const newEditorState = RichUtils.toggleInlineStyle(editorState, "BOLD");
@@ -46,11 +53,16 @@ function App() {
 
     return "not-handled";
   };
+   const saveToLocalStorage = () => {
+     const contentState = editorState.getCurrentContent();
+     const contentRaw = convertToRaw(contentState);
+     localStorage.setItem("editorContent", JSON.stringify(contentRaw));
+   };
   return (
     <div className="App">
       <div className="header">
         <header className="header-text">Demo editor by Mukul Bhardwaj</header>
-        <button>Save</button>
+        <button onClick={saveToLocalStorage}>Save</button>
       </div>
       <Editor
         editorState={editorState}
@@ -61,7 +73,6 @@ function App() {
         toolbarClassName="toolbar-class"
         handleBeforeInput={handleBeforeInput}
       />
-      {console.log(convertToRaw(editorState.getCurrentContent()))}
     </div>
   );
 }
