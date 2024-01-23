@@ -9,7 +9,6 @@ function App() {
     EditorState.createEmpty()
   );
   useEffect(() => {
-    // Load content from local storage on component mount
     const savedContent = localStorage.getItem("editorContent");
     if (savedContent) {
       const contentState = convertFromRaw(JSON.parse(savedContent));
