@@ -72,7 +72,7 @@ function App() {
     <div className="App">
       <div className="header">
         <header className="header-text">Demo editor by Mukul Bhardwaj</header>
-        <button onClick={saveToLocalStorage}>Save</button>
+        <button className="save-button" onClick={saveToLocalStorage}>Save</button>
       </div>
       <Editor
         editorState={editorState}

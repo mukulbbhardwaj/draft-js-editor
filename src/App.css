@@ -1,6 +1,8 @@
 .header {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 .header-text {
@@ -20,7 +22,11 @@
 .toolbar-class {
   display: none;
 }
-.RED_LINE {
-  text-decoration: line-through;
-  color: red;
+
+.save-button{
+height: 2rem;
+padding: 8px;
+background-color: rgb(90, 193, 90);
+border-radius: 9px;
+color: white;
 }
