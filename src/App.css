@@ -2,7 +2,9 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
+  background-color: aliceblue;
+  border-radius: 9px;
 }
 
 .header-text {
@@ -15,18 +17,29 @@
   text-align: center;
   padding: 12px;
 }
-.wrapper-class {
-  padding: 1rem;
-  border: 1px solid #ccc;
-}
+
 .toolbar-class {
   display: none;
 }
+.editor-class {
+  border: 1px solid black;
+  padding: 4px;
+  margin: 4px;
+  border-radius: 9px;
+  background-color: #efefef;
+}
 
-.save-button{
-height: 2rem;
-padding: 8px;
-background-color: rgb(90, 193, 90);
-border-radius: 9px;
-color: white;
+.save-button {
+  height: 2rem;
+  padding: 8px;
+  background-color: rgb(90, 193, 90);
+  border-radius: 9px;
+  color: white;
+}
+.instructions-box {
+  border: 1px solid gray;
+  width: max-content;
+  border-radius: 9px;
+  padding: 4px;
+  margin: 4px;
 }
